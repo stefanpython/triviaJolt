@@ -6,8 +6,14 @@ const Trivia = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState("");
   const [isCorrect, setIsCorrect] = useState(null);
+  const [score, setScore] = useState(0);
 
   useEffect(() => {
+    fetchQuestions();
+  }, []);
+
+  // Fetch trivia questions
+  const fetchQuestions = () => {
     fetch("https://the-trivia-api.com/api/questions?limit=10")
       .then((response) => {
         if (!response.ok) {
@@ -21,7 +27,7 @@ const Trivia = () => {
       .catch((err) => {
         console.error(err);
       });
-  }, []);
+  };
 
   const handleAnswer = (e) => {
     setSelectedAnswer(e.target.value);
@@ -29,7 +35,13 @@ const Trivia = () => {
 
   const checkAnswer = () => {
     const correctAnswer = questions[currentQuestion].correctAnswer;
-    setIsCorrect(selectedAnswer === correctAnswer);
+    const isAnswerCorrect = selectedAnswer === correctAnswer;
+    setIsCorrect(isAnswerCorrect);
+
+    // Increment the score if the answer is correct
+    if (isAnswerCorrect) {
+      setScore((prevScore) => prevScore + 1);
+    }
   };
 
   const nextQuestion = () => {
@@ -42,7 +54,7 @@ const Trivia = () => {
     return <div>Loading...</div>;
   }
 
-  console.log(questions);
+  console.log(score);
 
   return (
     <div className="Trivia">
