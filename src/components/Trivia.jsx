@@ -8,6 +8,7 @@ const Trivia = () => {
   const [isCorrect, setIsCorrect] = useState(null);
   const [score, setScore] = useState(0);
   const [displayCheck, setDisplayCheck] = useState(false);
+  const [count, setCount] = useState(10);
 
   useEffect(() => {
     fetchQuestions();
@@ -63,13 +64,19 @@ const Trivia = () => {
       setScore((prevScore) => prevScore + 1);
     }
 
+    // Set variable to true in order to hide check button
     setDisplayCheck(!displayCheck);
+
+    // Decrement count
+    setCount((prevCount) => prevCount - 1);
   };
 
   const nextQuestion = () => {
     setCurrentQuestion((currentQuestion + 1) % questions.length);
     setSelectedAnswer("");
     setIsCorrect(null);
+
+    // Allow display check button
     setDisplayCheck(false);
   };
 
@@ -77,13 +84,14 @@ const Trivia = () => {
     return <div>Loading...</div>;
   }
 
-  console.log(displayCheck);
+  console.log(score);
 
   return (
     <div className="Trivia">
       {questions && questions[currentQuestion] ? (
         <>
-          <h2>{questions[currentQuestion].question}</h2>
+          {count > 0 && <h2>{questions[currentQuestion].question}</h2>}
+
           {questions[currentQuestion].answers &&
           questions[currentQuestion].answers.length > 0 ? (
             <ul>
@@ -102,13 +110,18 @@ const Trivia = () => {
           ) : (
             <div>No answers available for this question.</div>
           )}
+
           {selectedAnswer && !displayCheck && (
             <button onClick={checkAnswer}>Check</button>
           )}
+
           {isCorrect !== null && (
             <div>
               {isCorrect ? "Correct!" : "Incorrect!"}
-              <button onClick={nextQuestion}>Next Question</button>
+
+              {count > 0 && (
+                <button onClick={nextQuestion}>Next Question</button>
+              )}
             </div>
           )}
         </>
