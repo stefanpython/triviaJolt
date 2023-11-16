@@ -9,6 +9,7 @@ const Trivia = () => {
   const [score, setScore] = useState(0);
   const [displayCheck, setDisplayCheck] = useState(false);
   const [count, setCount] = useState(10);
+  const [gameOver, setGameOver] = useState(false);
 
   useEffect(() => {
     fetchQuestions();
@@ -60,15 +61,16 @@ const Trivia = () => {
     setIsCorrect(isAnswerCorrect);
 
     // Increment the score if the answer is correct
-    if (isAnswerCorrect) {
-      setScore((prevScore) => prevScore + 1);
-    }
+    if (isAnswerCorrect) setScore((prevScore) => prevScore + 1);
 
     // Set variable to true in order to hide check button
     setDisplayCheck(!displayCheck);
 
     // Decrement count
     setCount((prevCount) => prevCount - 1);
+
+    // Set gameOver true after 10 questions
+    if (count === 1) setGameOver(true);
   };
 
   const nextQuestion = () => {
@@ -84,7 +86,7 @@ const Trivia = () => {
     return <div>Loading...</div>;
   }
 
-  console.log(score);
+  console.log(count, gameOver, score);
 
   return (
     <div className="Trivia">
