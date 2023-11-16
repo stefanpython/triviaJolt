@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./Trivia.css";
+import GameOver from "./GameOver";
 
 const Trivia = () => {
   const [questions, setQuestions] = useState(null);
@@ -8,7 +9,7 @@ const Trivia = () => {
   const [isCorrect, setIsCorrect] = useState(null);
   const [score, setScore] = useState(0);
   const [displayCheck, setDisplayCheck] = useState(false);
-  const [count, setCount] = useState(10);
+  const [count, setCount] = useState(2);
   const [gameOver, setGameOver] = useState(false);
 
   useEffect(() => {
@@ -26,7 +27,7 @@ const Trivia = () => {
 
   // Fetch trivia questions
   const fetchQuestions = () => {
-    fetch("https://the-trivia-api.com/api/questions?limit=10")
+    fetch("https://the-trivia-api.com/api/questions?limit=2")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Error fetching a response");
@@ -86,52 +87,60 @@ const Trivia = () => {
     return <div>Loading...</div>;
   }
 
-  console.log(count, gameOver, score);
+  console.log(gameOver);
 
   return (
-    <div className="Trivia">
-      {questions && questions[currentQuestion] ? (
-        <>
-          {count > 0 && <h2>{questions[currentQuestion].question}</h2>}
-
-          {questions[currentQuestion].answers &&
-          questions[currentQuestion].answers.length > 0 ? (
-            <ul>
-              {questions[currentQuestion].answers.map((answer, index) => (
-                <li key={index}>
-                  <input
-                    type="radio"
-                    value={answer}
-                    checked={selectedAnswer === answer}
-                    onChange={handleAnswer}
-                  />
-                  {answer}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <div>No answers available for this question.</div>
-          )}
-
-          {selectedAnswer && !displayCheck && (
-            <button onClick={checkAnswer}>Check</button>
-          )}
-
-          {isCorrect !== null && (
-            <div>
-              {isCorrect ? "Correct!" : "Incorrect!"}
-
-              {count > 0 && (
-                <button onClick={nextQuestion}>Next Question</button>
-              )}
-            </div>
-          )}
-        </>
+    <>
+      {gameOver ? (
+        <GameOver />
       ) : (
-        <div>Loading...</div>
+        <div className="trivia-container">
+          <h1>Welcome to Trivia</h1>
+          {questions && questions[currentQuestion] ? (
+            <>
+              {count > 0 && <h2>{questions[currentQuestion].question}</h2>}
+
+              {questions[currentQuestion].answers &&
+              questions[currentQuestion].answers.length > 0 ? (
+                <ul>
+                  {questions[currentQuestion].answers.map((answer, index) => (
+                    <li key={index}>
+                      <input
+                        type="radio"
+                        value={answer}
+                        checked={selectedAnswer === answer}
+                        onChange={handleAnswer}
+                      />
+                      {answer}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <div>No answers available for this question.</div>
+              )}
+
+              {selectedAnswer && !displayCheck && (
+                <button onClick={checkAnswer}>Check</button>
+              )}
+
+              {isCorrect !== null && (
+                <div>
+                  {isCorrect ? "Correct!" : "Incorrect!"}
+
+                  {count > 0 && (
+                    <button onClick={nextQuestion}>Next Question</button>
+                  )}
+                </div>
+              )}
+            </>
+          ) : (
+            <div>Loading...</div>
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 };
 
 export default Trivia;
+<GameOver />;
