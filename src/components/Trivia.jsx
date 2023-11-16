@@ -12,6 +12,15 @@ const Trivia = () => {
     fetchQuestions();
   }, []);
 
+  // Fisher-Yates shuffle function
+  const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  };
+
   // Fetch trivia questions
   const fetchQuestions = () => {
     fetch("https://the-trivia-api.com/api/questions?limit=10")
@@ -22,7 +31,17 @@ const Trivia = () => {
         return response.json();
       })
       .then((data) => {
-        setQuestions(data);
+        // Shuffle the answers, including the correct answer
+        const shuffledQuestions = data.map((question) => {
+          return {
+            ...question,
+            answers: shuffleArray([
+              ...question.incorrectAnswers,
+              question.correctAnswer,
+            ]),
+          };
+        });
+        setQuestions(shuffledQuestions);
       })
       .catch((err) => {
         console.error(err);
@@ -61,34 +80,20 @@ const Trivia = () => {
       {questions && questions[currentQuestion] ? (
         <>
           <h2>{questions[currentQuestion].question}</h2>
-          {questions[currentQuestion].incorrectAnswers &&
-          questions[currentQuestion].incorrectAnswers.length > 0 ? (
+          {questions[currentQuestion].answers &&
+          questions[currentQuestion].answers.length > 0 ? (
             <ul>
-              {questions[currentQuestion].incorrectAnswers.map(
-                (answer, index) => (
-                  <li key={index}>
-                    <input
-                      type="radio"
-                      value={answer}
-                      checked={selectedAnswer === answer}
-                      onChange={handleAnswer}
-                    />
-                    {answer}
-                  </li>
-                )
-              )}
-              {/* Include the correct answer as an option */}
-              <li>
-                <input
-                  type="radio"
-                  value={questions[currentQuestion].correctAnswer}
-                  checked={
-                    selectedAnswer === questions[currentQuestion].correctAnswer
-                  }
-                  onChange={handleAnswer}
-                />
-                {questions[currentQuestion].correctAnswer}
-              </li>
+              {questions[currentQuestion].answers.map((answer, index) => (
+                <li key={index}>
+                  <input
+                    type="radio"
+                    value={answer}
+                    checked={selectedAnswer === answer}
+                    onChange={handleAnswer}
+                  />
+                  {answer}
+                </li>
+              ))}
             </ul>
           ) : (
             <div>No answers available for this question.</div>
