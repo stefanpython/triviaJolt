@@ -1,5 +1,5 @@
 .game-over {
-  background-color: aliceblue;
+  background-color: #9dd3cc;
   padding: 20px;
   border-radius: 20px 0 20px 0;
 }
@@ -9,6 +9,12 @@
   border-radius: 5px;
   padding: 10px;
   font-size: 18px;
-  background-color: rgba(65, 221, 187, 0.582);
-  color: rgb(75, 75, 8);
+  background-color: #0051ff;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+}
+
+.score {
+  color: green;
+  font-size: 20px;
 }

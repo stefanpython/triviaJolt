@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Noto+Serif+Balinese&display=swap");
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -8,5 +10,13 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-  background-color: rgb(248, 230, 207);
+  background-color: #ffe4b3;
+}
+
+h1 {
+  font-family: "Noto Serif Balinese", serif;
+}
+
+h2 {
+  font-family: "Montserrat", sans-serif;
 }

@@ -1,0 +1,49 @@
+.trivia-container {
+  background-color: #9dd3cc;
+  padding: 20px;
+  border-radius: 0 20px 0 20px;
+}
+
+li {
+  list-style: none;
+}
+
+.check-btn {
+  border: none;
+  padding: 10px;
+  background-color: coral;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.next-btn {
+  border: none;
+  padding: 10px;
+  background-color: rgb(31, 156, 98);
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+}
+
+.question-container {
+  margin-left: -30px;
+}
+
+/* Checkbox input style  */
+.question-container li .checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #3498db; /* Set border color to blue */
+  border-radius: 4px; /* Make it slightly rounded */
+  display: inline-block;
+  left: 0;
+  top: 0;
+  cursor: pointer;
+}
+
+.container {
+  font-family: "Montserrat", sans-serif;
+}

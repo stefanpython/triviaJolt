@@ -9,7 +9,7 @@ const Trivia = () => {
   const [isCorrect, setIsCorrect] = useState(null);
   const [score, setScore] = useState(0);
   const [displayCheck, setDisplayCheck] = useState(false);
-  const [count, setCount] = useState(2);
+  const [count, setCount] = useState(9);
   const [gameOver, setGameOver] = useState(false);
 
   useEffect(() => {
@@ -87,12 +87,10 @@ const Trivia = () => {
     return <div>Loading...</div>;
   }
 
-  console.log(gameOver);
-
   return (
     <>
       {gameOver ? (
-        <GameOver />
+        <GameOver score={score} />
       ) : (
         <div className="trivia-container">
           <h1>Welcome to Trivia</h1>
@@ -102,33 +100,41 @@ const Trivia = () => {
 
               {questions[currentQuestion].answers &&
               questions[currentQuestion].answers.length > 0 ? (
-                <ul>
-                  {questions[currentQuestion].answers.map((answer, index) => (
-                    <li key={index}>
-                      <input
-                        type="radio"
-                        value={answer}
-                        checked={selectedAnswer === answer}
-                        onChange={handleAnswer}
-                      />
-                      {answer}
-                    </li>
-                  ))}
-                </ul>
+                <div className="question-container">
+                  <ul>
+                    {questions[currentQuestion].answers.map((answer, index) => (
+                      <li key={index} className="container">
+                        {answer}
+                        <input
+                          className="checkbox"
+                          type="radio"
+                          value={answer}
+                          checked={selectedAnswer === answer}
+                          onChange={handleAnswer}
+                        />
+                        <span className="checkmark"></span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               ) : (
                 <div>No answers available for this question.</div>
               )}
 
               {selectedAnswer && !displayCheck && (
-                <button onClick={checkAnswer}>Check</button>
+                <button className="check-btn" onClick={checkAnswer}>
+                  Check
+                </button>
               )}
 
               {isCorrect !== null && (
                 <div>
-                  {isCorrect ? "Correct!" : "Incorrect!"}
+                  <h3>{isCorrect ? "Correct!" : "Incorrect!"}</h3>
 
                   {count > 0 && (
-                    <button onClick={nextQuestion}>Next Question</button>
+                    <button className="next-btn" onClick={nextQuestion}>
+                      Next Question
+                    </button>
                   )}
                 </div>
               )}
@@ -144,7 +150,7 @@ const Trivia = () => {
 
 export default Trivia;
 
-// TODO:  - Add refresh button to gameover component
+// TODO:
 //        - Display final score in gameover component
 //        - Style trivia page
 //        - Style gameover component
