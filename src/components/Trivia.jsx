@@ -9,7 +9,7 @@ const Trivia = () => {
   const [isCorrect, setIsCorrect] = useState(null);
   const [score, setScore] = useState(0);
   const [displayCheck, setDisplayCheck] = useState(false);
-  const [count, setCount] = useState(9);
+  const [count, setCount] = useState(10);
   const [gameOver, setGameOver] = useState(false);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const Trivia = () => {
 
   // Fetch trivia questions
   const fetchQuestions = () => {
-    fetch("https://the-trivia-api.com/api/questions?limit=9")
+    fetch("https://the-trivia-api.com/api/questions?limit=10")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Error fetching a response");
@@ -67,9 +67,6 @@ const Trivia = () => {
     // Set variable to true in order to hide check button
     setDisplayCheck(!displayCheck);
 
-    // Decrement count
-    setCount((prevCount) => prevCount - 1);
-
     // Set gameOver true after 10 questions
     if (count === 1) setGameOver(true);
   };
@@ -81,6 +78,9 @@ const Trivia = () => {
 
     // Allow display check button
     setDisplayCheck(false);
+
+    // Decrement count
+    setCount((prevCount) => prevCount - 1);
   };
 
   if (!questions) {
@@ -93,9 +93,16 @@ const Trivia = () => {
         <GameOver score={score} />
       ) : (
         <div className="trivia-container">
-          <h1>Welcome to Trivia</h1>
+          <h1>Welcome to Trivia Jolt</h1>
+
           {questions && questions[currentQuestion] ? (
             <>
+              {count > 0 && (
+                <h3>
+                  Question {questions.length - count + 1}/{questions.length}
+                </h3>
+              )}
+
               {count > 0 && <h2>{questions[currentQuestion].question}</h2>}
 
               {questions[currentQuestion].answers &&
@@ -149,8 +156,3 @@ const Trivia = () => {
 };
 
 export default Trivia;
-
-// TODO:
-//        - Display final score in gameover component
-//        - Style trivia page
-//        - Style gameover component
