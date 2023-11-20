@@ -4,7 +4,12 @@ function GameOver() {
   return (
     <div className="game-over">
       <h1>Game Over</h1>
-      <p>You can try again or refresh the page</p>
+      <p>Your final score is:</p>
+
+      <h4>Think you can do better ?</h4>
+      <button className="again-btn" onClick={() => window.location.reload()}>
+        Play again
+      </button>
     </div>
   );
 }

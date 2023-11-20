@@ -1,0 +1,14 @@
+.game-over {
+  background-color: aliceblue;
+  padding: 20px;
+  border-radius: 20px 0 20px 0;
+}
+
+.again-btn {
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 18px;
+  background-color: rgba(65, 221, 187, 0.582);
+  color: rgb(75, 75, 8);
+}

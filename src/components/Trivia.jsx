@@ -27,7 +27,7 @@ const Trivia = () => {
 
   // Fetch trivia questions
   const fetchQuestions = () => {
-    fetch("https://the-trivia-api.com/api/questions?limit=2")
+    fetch("https://the-trivia-api.com/api/questions?limit=9")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Error fetching a response");
@@ -143,4 +143,8 @@ const Trivia = () => {
 };
 
 export default Trivia;
-<GameOver />;
+
+// TODO:  - Add refresh button to gameover component
+//        - Display final score in gameover component
+//        - Style trivia page
+//        - Style gameover component
