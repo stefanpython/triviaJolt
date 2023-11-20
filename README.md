@@ -2,6 +2,8 @@
 
 Welcome to Trivia Jolt, a React-based trivia game where you can test your knowledge with a set of challenging questions.
 
+Try it [HERE](https://stefanpython.github.io/triviaJolt/)
+
 ## Features
 
 - Fetches trivia questions from [The Trivia API](https://the-trivia-api.com/).
